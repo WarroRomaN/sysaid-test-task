@@ -127,9 +127,28 @@ function App() {
                         <div className="alert alert-primary fs-1 text-center fw-bold" role="alert">
                             Uncompleted Tasks
                         </div>
-                        {uncompletedTasks.map(task => (<ListGroup.Item>
+
+                        {uncompletedTasks.filter(task => task.key === dayTask.key).map(task => (<ListGroup.Item>
                             <Row>
-                                {task.key === dayTask.key ? <div>Test</div> : null}
+                                <div className="fw-bold fs-4 text-primary">
+                                    <span>This is task of the day</span>
+                                </div>
+                                <div className="fw-bold">
+                                    <span>{task.activity}</span>
+                                </div>
+                                <span>Rank: {task.rank}</span>
+                                <span>Type: {task.type}</span>
+                                <Button
+                                    onClick={() => completeTaskFromUncompleted(task.key, user.username)}>Complete</Button>
+                                <Button
+                                    onClick={() => addToWishList(task.key, user.username)}>Add to
+                                    WishList</Button>
+
+                            </Row>
+                        </ListGroup.Item>))}
+
+                        {uncompletedTasks.filter(task => task.key !== dayTask.key).map(task => (<ListGroup.Item>
+                            <Row>
                                 <div className="fw-bold">
                                     <span>{task.activity}</span>
                                 </div>
